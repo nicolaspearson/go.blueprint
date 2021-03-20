@@ -1,15 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/nicolaspearson/go.blueprint/cmd/blueprint/config"
 )
 
 func main() {
 	if err := config.LoadConfig("./config"); err != nil {
-		panic(fmt.Errorf("Invalid application configuration: %s", err))
+		log.Fatalf("Invalid application configuration: %v", err)
 	}
-
-	fmt.Println(config.Config.ConfigVar)
+	log.Printf("Environment: %s", config.Vars.Environment)
+	log.Printf("ReleaseVersion: %s", config.Vars.ReleaseVersion)
+	log.Printf("Version: %s", config.Vars.Version)
 }

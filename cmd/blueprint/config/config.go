@@ -1,16 +1,18 @@
 package config
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/viper"
 )
 
-// Config is a global object that holds all application level variables.
-var Config appConfig
+// Vars is a global object that holds all application level variables.
+var Vars vars
 
-type appConfig struct {
-	ConfigVar string
+type vars struct {
+	Environment    string
+	ReleaseVersion string
+	Version        string
 }
 
 // LoadConfig loads config variables from file paths
@@ -20,11 +22,12 @@ func LoadConfig(configPaths ...string) error {
 	v.SetConfigType("yaml")
 	v.SetEnvPrefix("blueprint")
 	v.AutomaticEnv()
+	v.BindEnv("releaseVersion", "BLUEPRINT_RELEASE_VERSION")
 	for _, path := range configPaths {
 		v.AddConfigPath(path)
 	}
 	if err := v.ReadInConfig(); err != nil {
-		return fmt.Errorf("failed to read the configuration file: %s", err)
+		log.Fatalf("Failed to read the configuration file: %v", err)
 	}
-	return v.Unmarshal(&Config)
+	return v.Unmarshal(&Vars)
 }
