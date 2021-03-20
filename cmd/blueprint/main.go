@@ -8,7 +8,7 @@ import (
 
 func main() {
 	if err := config.LoadConfig("./config"); err != nil {
-		panic(fmt.Errorf("invalid application configuration: %s", err))
+		panic(fmt.Errorf("Invalid application configuration: %s", err))
 	}
 
 	fmt.Println(config.Config.ConfigVar)

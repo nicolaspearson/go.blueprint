@@ -3,3 +3,17 @@ version: "3.7"
 networks:
   development:
     driver: bridge
+
+services:
+  blueprint:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blueprint
+    image: blueprint:1.0
+    environment:
+      - BLUEPRINT_CONFIGVAR=Docker Value
+    expose:
+      - 3000
+    networks:
+      - development

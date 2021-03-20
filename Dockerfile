@@ -2,8 +2,7 @@
 FROM golang:1.16 as builder
 WORKDIR /go/src/github.com/nicolaspearson/go.blueprint/
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o blueprint main.go
-RUN echo > .env.docker
+RUN CGO_ENABLED=0 GOOS=linux go build -o blueprint ./cmd/blueprint/main.go
 
 RUN GRPC_HEALTH_PROBE_VERSION=v0.3.6 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
@@ -20,6 +19,7 @@ ENV VERSION=$VERSION
 
 WORKDIR /bin/
 COPY --from=builder /go/src/github.com/nicolaspearson/go.blueprint/blueprint .
-COPY --from=builder /go/src/github.com/nicolaspearson/go.blueprint/.env.docker .env
+COPY --from=builder /go/src/github.com/nicolaspearson/go.blueprint/config/example.yaml ./config/
+COPY --from=builder /go/src/github.com/nicolaspearson/go.blueprint/pkg .
 COPY --from=builder /bin/grpc_health_probe .
 ENTRYPOINT [ "/bin/blueprint" ]

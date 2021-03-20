@@ -2,6 +2,30 @@
 
 A *Go* starter project.
 
+## Getting Started
+
+Run the application:
+```bash
+make run
+```
+
+Execute the tests:
+```bash
+make test
+```
+
+### Docker
+
+Build the Docker image:
+```bash
+make docker-build
+```
+
+Run the Docker image:
+```bash
+make docker-run
+```
+
 ## Directory Structure
 
 - `build` contains all shell scripts needed to build and test the application.
