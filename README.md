@@ -6,12 +6,12 @@ A *Go* starter project.
 
 Run the application:
 ```bash
-make run
+make go-run
 ```
 
 Execute the tests:
 ```bash
-make test
+make go-test
 ```
 
 ### Docker
